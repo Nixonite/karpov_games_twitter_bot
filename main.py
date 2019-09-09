@@ -54,6 +54,9 @@ if __name__=="__main__":
   
   random_game = random.choice(karpov_games)
 
+  while '?' in random_game.headers:
+    random_game = random.choice(karpov_games)
+
   lichess_link = get_lichess_analysis_board_url(random_game)
 
   if lichess_link is not None:

@@ -37,6 +37,13 @@ def get_lichess_analysis_board_url(karpov_pgn):
   else:
     return None
 
+def is_clean_header(g):
+  if ('?' not in g.headers['White']) and ('?' not in g.headers['Black']) \
+    and ('?' not in g.headers['Date']):
+    return True
+  else:
+    return False
+
 if __name__=="__main__":
   secrets = fetch_twitter_secrets()
 
@@ -52,20 +59,20 @@ if __name__=="__main__":
   
   karpov_games = get_karpov_games()
   
-  random_game = random.choice(karpov_games)
+  good_games = list(filter(is_clean_header, karpov_games))
 
-  while '?' in random_game.headers:
-    random_game = random.choice(karpov_games)
+  random_game = random.choice(good_games)
 
-  lichess_link = get_lichess_analysis_board_url(random_game)
+  print(random_game.headers)
+  # lichess_link = get_lichess_analysis_board_url(random_game)
 
-  if lichess_link is not None:
-    white = random_game.headers['White']
-    black = random_game.headers['Black']
-    game_date = random_game.headers['Date'].replace('.','-')
-    api.update_status("{} vs {} ({}) {}".format(
-      white,
-      black,
-      game_date,
-      lichess_link
-    ))
+  # if lichess_link is not None:
+  #   white = random_game.headers['White']
+  #   black = random_game.headers['Black']
+  #   game_date = random_game.headers['Date'].replace('.','-')
+  #   api.update_status("{} vs {} ({}) {}".format(
+  #     white,
+  #     black,
+  #     game_date,
+  #     lichess_link
+  #   ))

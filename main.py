@@ -63,16 +63,15 @@ if __name__=="__main__":
 
   random_game = random.choice(good_games)
 
-  print(random_game.headers)
-  # lichess_link = get_lichess_analysis_board_url(random_game)
+  lichess_link = get_lichess_analysis_board_url(random_game)
 
-  # if lichess_link is not None:
-  #   white = random_game.headers['White']
-  #   black = random_game.headers['Black']
-  #   game_date = random_game.headers['Date'].replace('.','-')
-  #   api.update_status("{} vs {} ({}) {}".format(
-  #     white,
-  #     black,
-  #     game_date,
-  #     lichess_link
-  #   ))
+  if lichess_link is not None:
+    white = random_game.headers['White']
+    black = random_game.headers['Black']
+    game_date = random_game.headers['Date'].replace('.','-')
+    api.update_status("{} vs {} ({}) {}".format(
+      white,
+      black,
+      game_date,
+      lichess_link
+    ))
